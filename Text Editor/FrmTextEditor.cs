@@ -102,7 +102,7 @@ namespace Text_Editor
       int pos = TxtDocument.SelectionStart;
       int line = TxtDocument.GetLineFromCharIndex(pos);
       int column = TxtDocument.SelectionStart - TxtDocument.GetFirstCharIndexFromLine(line);
-      lineColumnStatusLabel.Text = "Line " + (line + 1) + ", Column " + (column + 1);
+      LineStatus.Text = "Line " + (line + 1) + ", Column " + (column + 1);
     }
 
     private int ConvertToRGB(System.Drawing.Color c)
@@ -285,12 +285,21 @@ namespace Text_Editor
       {
         case "BtnLeftAlign":
           TxtDocument.SelectionAlignment = HorizontalAlignment.Left;
+          BtnLeftAlign.Checked = true;
+          BtnCenterAlign.Checked = false;
+          BtnRightAlign.Checked = false;
           break;
         case "BtnCenterAlign":
           TxtDocument.SelectionAlignment = HorizontalAlignment.Center;
+          BtnCenterAlign.Checked = true;
+          BtnLeftAlign.Checked = false;
+          BtnRightAlign.Checked = false;
           break;
         case "BtnRightAlign":
           TxtDocument.SelectionAlignment = HorizontalAlignment.Right;
+          BtnRightAlign.Checked = true;
+          BtnLeftAlign.Checked = false;
+          BtnCenterAlign.Checked = false;
           break;
       }
     }
@@ -325,7 +334,7 @@ namespace Text_Editor
       }
       catch (Exception ex)
       {
-        MessageBox.Show(ex.Message, "Error Information", MessageBoxButtons.OK, MessageBoxIcon.Warning); // show error message
+        MessageBox.Show(ex.Message, "Error Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
       }
     }
 
@@ -345,7 +354,7 @@ namespace Text_Editor
       }
       catch (Exception ex)
       {
-        MessageBox.Show(ex.Message, "Error Information", MessageBoxButtons.OK, MessageBoxIcon.Warning); // show error message
+        MessageBox.Show(ex.Message, "Error Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
       }
     }
 
@@ -492,8 +501,8 @@ namespace Text_Editor
     {
       try
       {
-        FontD.ShowDialog();
         System.Drawing.Font oldFont = this.Font;
+        FontD.ShowDialog();
         if (FontD.ShowDialog() == DialogResult.OK)
         {
           FontD_Apply(TxtDocument, new System.EventArgs());
@@ -509,7 +518,7 @@ namespace Text_Editor
       }
       catch (Exception ex)
       {
-        MessageBox.Show(ex.Message, "Error Information", MessageBoxButtons.OK, MessageBoxIcon.Warning); // error
+        MessageBox.Show(ex.Message, "Error Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
       }
     }
     private void FontD_HelpRequest(object sender, EventArgs e)
@@ -543,8 +552,15 @@ namespace Text_Editor
     }
     private void BtnPrintPreview_Click(object sender, EventArgs e)
     {
-      PrintPreviewD.Document = printDocument;
-      PrintPreviewD.ShowDialog();
+      try
+      {
+        PrintPreviewD.Document = printDocument;
+        PrintPreviewD.ShowDialog();
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message, "Error Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+      }
     }
 
     private void ColorD_HelpRequest(object sender, EventArgs e)
@@ -559,6 +575,9 @@ namespace Text_Editor
         TxtDocument.ForeColor = ColorD.Color;
       }
     }
+
+
+
     private void TxtDocument_KeyUp(object sender, KeyEventArgs e)
     {
       switch (e.KeyCode)
@@ -567,25 +586,25 @@ namespace Text_Editor
           pos = TxtDocument.SelectionStart;
           line = TxtDocument.GetLineFromCharIndex(pos);
           column = TxtDocument.SelectionStart - TxtDocument.GetFirstCharIndexFromLine(line);
-          lineColumnStatusLabel.Text = "Line " + (line + 1) + ", Column " + (column + 1);
+          LineStatus.Text = "Line " + (line + 1) + ", Column " + (column + 1);
           break;
         case Keys.Right:
           pos = TxtDocument.SelectionStart;
           line = TxtDocument.GetLineFromCharIndex(pos);
           column = TxtDocument.SelectionStart - TxtDocument.GetFirstCharIndexFromLine(line);
-          lineColumnStatusLabel.Text = "Line " + (line + 1) + ", Column " + (column + 1);
+          LineStatus.Text = "Line " + (line + 1) + ", Column " + (column + 1);
           break;
         case Keys.Up:
           pos = TxtDocument.SelectionStart;
           line = TxtDocument.GetLineFromCharIndex(pos);
           column = TxtDocument.SelectionStart - TxtDocument.GetFirstCharIndexFromLine(line);
-          lineColumnStatusLabel.Text = "Line " + (line + 1) + ", Column " + (column + 1);
+          LineStatus.Text = "Line " + (line + 1) + ", Column " + (column + 1);
           break;
         case Keys.Left:
           pos = TxtDocument.SelectionStart;
           line = TxtDocument.GetLineFromCharIndex(pos);
           column = TxtDocument.SelectionStart - TxtDocument.GetFirstCharIndexFromLine(line);
-          lineColumnStatusLabel.Text = "Line " + (line + 1) + ", Column " + (column + 1);
+          LineStatus.Text = "Line " + (line + 1) + ", Column " + (column + 1);
           break;
       }
     }
@@ -594,7 +613,7 @@ namespace Text_Editor
       int pos = TxtDocument.SelectionStart;
       int line = TxtDocument.GetLineFromCharIndex(pos);
       int column = TxtDocument.SelectionStart - TxtDocument.GetFirstCharIndexFromLine(line);
-      lineColumnStatusLabel.Text = "Line " + (line + 1) + ", Column " + (column + 1);
+      LineStatus.Text = "Line " + (line + 1) + ", Column " + (column + 1);
     }
   }
 }
